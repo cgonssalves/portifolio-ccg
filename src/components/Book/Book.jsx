@@ -87,11 +87,11 @@ export default function Book() {
     setFlipDir(delta);
     setFlipping(true);
 
-    // Após a animação CSS terminar (600ms), troca o conteúdo
+    // Após a animação CSS terminar (700ms), troca o conteúdo
     setTimeout(() => {
       setSpread(next);
       setFlipping(false);
-    }, 600);
+    }, 700);
   }, [spread, flipping]);
 
   const goToContact = () => { if (!flipping) navigate(7 - spread); };
@@ -174,6 +174,9 @@ export default function Book() {
                 {cur.lNum}
               </span>
             )}
+            {flipping && flipDir > 0 && (
+              <div className={styles.flipShadowLeft} />
+            )}
           </div>
 
           {/* ── PÁGINA DIREITA — dobra como um livro real ── */}
@@ -217,15 +220,18 @@ export default function Book() {
             )}
             <span className={styles.pageNum} style={{right:12}}>{cur.rNum}</span>
           </div>
-        </div>
 
-        {/* Controles */}
-        <div className={styles.controls}>
-          <button className={styles.navBtn} onClick={() => navigate(-1)}
-            disabled={spread === 0 || flipping}><FaChevronLeft /></button>
-          <span className={styles.indicator}>{spread + 1} / 8</span>
-          <button className={styles.navBtn} onClick={() => navigate(1)}
-            disabled={spread === 7 || flipping}><FaChevronRight /></button>
+          {/* Botões nos cantos inferiores do livro */}
+          <button className={`${styles.navBtn} ${styles.navBtnPrev}`}
+            onClick={() => navigate(-1)}
+            disabled={spread === 0 || flipping}>
+            <FaChevronLeft />
+          </button>
+          <button className={`${styles.navBtn} ${styles.navBtnNext}`}
+            onClick={() => navigate(1)}
+            disabled={spread === 7 || flipping}>
+            <FaChevronRight />
+          </button>
         </div>
       </div>
     </section>
