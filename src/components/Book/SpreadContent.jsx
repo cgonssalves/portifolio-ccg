@@ -70,19 +70,34 @@ export function InfoPage() {
    que todas as imagens tenham exatamente a mesma altura.
    Usado em projetos E eventos.
 ───────────────────────────────────────────────────────────── */
-function PageImage({ src, alt, placeholder }) {
+function PageImage({ src, alt, placeholder, fill }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className={styles.pageImg}>
-      {src
-        ? <img src={src} alt={alt} />
-        : (
-          <div className={styles.imgPlaceholder}>
-            <FaImage />
-            <span>{placeholder || 'Adicione via painel de edição'}</span>
+    <>
+      <div
+        className={`${styles.pageImg} ${fill ? styles.pageImgFill : ''}`}
+        onClick={src ? () => setOpen(true) : undefined}
+        style={src ? { cursor: 'zoom-in' } : undefined}
+      >
+        {src
+          ? <img src={src} alt={alt} />
+          : (
+            <div className={styles.imgPlaceholder}>
+              <FaImage />
+              <span>{placeholder || 'Adicione via painel de edição'}</span>
+            </div>
+          )
+        }
+      </div>
+      {open && (
+        <div className={styles.lightboxOverlay} onClick={() => setOpen(false)}>
+          <div className={styles.lightboxBox} onClick={e => e.stopPropagation()}>
+            <button className={styles.lightboxClose} onClick={() => setOpen(false)}>✕</button>
+            <img src={src} alt={alt} className={styles.lightboxImg} />
           </div>
-        )
-      }
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -91,6 +106,7 @@ function PageImage({ src, alt, placeholder }) {
    Botão Editar SOMENTE no lado "right" — evita duplicação.
 ───────────────────────────────────────────────────────────── */
 function ProjectPage({ project, side, onSave }) {
+  const [videoOpen, setVideoOpen] = useState(false);
   return (
     <div className={styles.page}>
 
@@ -104,8 +120,8 @@ function ProjectPage({ project, side, onSave }) {
           <div className={styles.projTitleBig}>{project.name}</div>
           <div className={styles.projSubtitle}>{project.tagline}</div>
 
-          {/* Imagem padronizada — mesma altura em todas as páginas */}
-          <PageImage src={project.imgLeft} alt={`${project.name} — código`} />
+          {/* Imagem cresce para preencher ~75% da página */}
+          <PageImage src={project.imgLeft} alt={`${project.name} — código`} fill />
 
           <div className={styles.techBadges}>
             {(project.tech || '').split('·').map(t => (
@@ -116,9 +132,24 @@ function ProjectPage({ project, side, onSave }) {
       ) : (
         <>
           {project.video ? (
-            <div className={styles.pageImg}>
-              <iframe src={project.video} title={project.name} frameBorder="0" allowFullScreen />
-            </div>
+            <>
+              <div className={styles.pageImg}
+                   style={{ position: 'relative', cursor: 'zoom-in' }}
+                   onClick={() => setVideoOpen(true)}>
+                <iframe src={project.video} title={project.name} frameBorder="0" allowFullScreen />
+                <div className={styles.iframeOverlay} />
+              </div>
+              {videoOpen && (
+                <div className={styles.lightboxOverlay} onClick={() => setVideoOpen(false)}>
+                  <div className={styles.lightboxBox} onClick={e => e.stopPropagation()}>
+                    <button className={styles.lightboxClose} onClick={() => setVideoOpen(false)}>✕</button>
+                    <div className={styles.lightboxVideo}>
+                      <iframe src={project.video} title={project.name} frameBorder="0" allowFullScreen />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <PageImage src={project.imgRight} alt={`${project.name} — rodando`} />
           )}
@@ -162,56 +193,70 @@ export const PooRight       = ({ p, onSave }) => <ProjectPage project={p} side="
 ───────────────────────────────────────────────────────────── */
 function EventCarousel({ photos }) {
   const [idx, setIdx] = useState(0);
+  const [lbOpen, setLbOpen] = useState(false);
+  const [lbIdx, setLbIdx] = useState(0);
 
   return (
-    <div className={styles.pageImg} style={{ position: 'relative' }}>
-      {photos.length === 0 ? (
-        <div className={styles.imgPlaceholder}>
-          <FaImage />
-          <span>Adicione fotos via painel de edição</span>
-        </div>
-      ) : (
-        <>
-          {/* Track */}
-          <div style={{ position:'absolute', inset:0, overflow:'hidden', borderRadius:'inherit' }}>
-            <div style={{
-              display: 'flex',
-              height: '100%',
-              transition: 'transform 0.4s ease',
-              transform: `translateX(-${idx * 100}%)`,
-            }}>
-              {photos.map((src, i) => (
-                <div key={i} style={{ flexShrink:0, width:'100%', height:'100%' }}>
-                  <img src={src} alt={`Foto ${i+1}`}
-                    style={{ width:'100%', height:'100%', objectFit:'cover' }} />
-                </div>
-              ))}
-            </div>
+    <>
+      <div className={styles.pageImg} style={{ position: 'relative' }}>
+        {photos.length === 0 ? (
+          <div className={styles.imgPlaceholder}>
+            <FaImage />
+            <span>Adicione fotos via painel de edição</span>
           </div>
-
-          {/* Controles */}
-          {photos.length > 1 && (
-            <>
-              <button className={`${styles.carouselCtrl} ${styles.cPrev}`}
-                onClick={() => setIdx(i => (i - 1 + photos.length) % photos.length)}>
-                <FaChevronLeft />
-              </button>
-              <button className={`${styles.carouselCtrl} ${styles.cNext}`}
-                onClick={() => setIdx(i => (i + 1) % photos.length)}>
-                <FaChevronRight />
-              </button>
-              <div className={styles.carouselDots}>
-                {photos.map((_, i) => (
-                  <button key={i}
-                    className={`${styles.cdot} ${i === idx ? styles.cdotActive : ''}`}
-                    onClick={() => setIdx(i)} />
+        ) : (
+          <>
+            {/* Track */}
+            <div style={{ position:'absolute', inset:0, overflow:'hidden', borderRadius:'inherit' }}>
+              <div style={{
+                display: 'flex',
+                height: '100%',
+                transition: 'transform 0.4s ease',
+                transform: `translateX(-${idx * 100}%)`,
+              }}>
+                {photos.map((src, i) => (
+                  <div key={i} style={{ flexShrink:0, width:'100%', height:'100%' }}>
+                    <img src={src} alt={`Foto ${i+1}`}
+                      style={{ width:'100%', height:'100%', objectFit:'cover', cursor:'zoom-in' }}
+                      onClick={() => { setLbIdx(i); setLbOpen(true); }} />
+                  </div>
                 ))}
               </div>
-            </>
-          )}
-        </>
+            </div>
+
+            {/* Controles */}
+            {photos.length > 1 && (
+              <>
+                <button className={`${styles.carouselCtrl} ${styles.cPrev}`}
+                  onClick={() => setIdx(i => (i - 1 + photos.length) % photos.length)}>
+                  <FaChevronLeft />
+                </button>
+                <button className={`${styles.carouselCtrl} ${styles.cNext}`}
+                  onClick={() => setIdx(i => (i + 1) % photos.length)}>
+                  <FaChevronRight />
+                </button>
+                <div className={styles.carouselDots}>
+                  {photos.map((_, i) => (
+                    <button key={i}
+                      className={`${styles.cdot} ${i === idx ? styles.cdotActive : ''}`}
+                      onClick={() => setIdx(i)} />
+                  ))}
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </div>
+
+      {lbOpen && (
+        <div className={styles.lightboxOverlay} onClick={() => setLbOpen(false)}>
+          <div className={styles.lightboxBox} onClick={e => e.stopPropagation()}>
+            <button className={styles.lightboxClose} onClick={() => setLbOpen(false)}>✕</button>
+            <img src={photos[lbIdx]} alt={`Foto ${lbIdx + 1}`} className={styles.lightboxImg} />
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 
