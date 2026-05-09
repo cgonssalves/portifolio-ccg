@@ -1,7 +1,7 @@
 .parallaxSection {
   position: relative;
   width: 100%;
-  height: 340px;
+  height: 480px;          /* maior para o parallax ser perceptível */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,10 +9,14 @@
   isolation: isolate;
 }
 
+/* Background com margem extra para o movimento não mostrar borda */
 .parallaxBg {
   position: absolute;
-  inset: -80px 0;
-  background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2000&q=80')
+  top: -90px;
+  left: 0;
+  right: 0;
+  bottom: -90px;
+  background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=2400&q=80')
     center / cover no-repeat;
   will-change: transform;
   z-index: -1;
@@ -22,10 +26,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg,
-    rgba(26,18,8,0.72) 0%,
-    rgba(122,64,16,0.55) 50%,
-    rgba(26,18,8,0.72) 100%
+    160deg,
+    rgba(20,12,4,0.72) 0%,
+    rgba(100,55,10,0.50) 50%,
+    rgba(20,12,4,0.72) 100%
   );
   z-index: 0;
 }
@@ -37,42 +41,32 @@
   padding: 0 20px;
 }
 
-.heading {
-  font-family: 'Lora', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #fdf6e8;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-}
-
-.sub {
-  font-size: 0.88rem;
-  color: rgba(232,184,96,0.75);
-  margin-bottom: 28px;
-  max-width: 420px;
-  line-height: 1.6;
-}
-
+/* Botão discreto — proporcional à seção, não muito grande */
 .lattesBtn {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  background: #d4922a;
-  color: white;
+  gap: 8px;
+  background: rgba(212,146,42,0.88);
+  color: #fff8ee;
   border: none;
-  border-radius: 30px;
-  padding: 13px 34px;
-  font-size: 0.9rem;
-  font-weight: 700;
+  border-radius: 28px;
+  padding: 11px 26px;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
   text-decoration: none;
-  transition: all 0.25s;
-  box-shadow: 0 6px 28px rgba(212,146,42,0.45);
+  letter-spacing: 0.3px;
+  transition: all 0.28s ease;
+  box-shadow: 0 4px 20px rgba(212,146,42,0.35), 0 1px 4px rgba(0,0,0,0.25);
+  backdrop-filter: blur(4px);
 }
 .lattesBtn:hover {
-  background: #a06518;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 36px rgba(212,146,42,0.55);
+  background: rgba(160,101,24,0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(212,146,42,0.5);
+}
+.lattesBtn svg {
+  font-size: 0.78rem;
+  opacity: 0.9;
 }
