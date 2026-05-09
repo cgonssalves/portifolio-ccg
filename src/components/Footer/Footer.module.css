@@ -1,0 +1,36 @@
+.footer {
+  background: #0e0a03;
+  padding: 28px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(212,146,42,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.socials {
+  display: flex;
+  gap: 14px;
+}
+.socials a {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(212,146,42,0.1);
+  border: 1px solid rgba(212,146,42,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(232,184,96,0.5);
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.socials a:hover {
+  background: #d4922a;
+  border-color: #d4922a;
+  color: white;
+}
+
+.copy {
+  font-size: 0.68rem;
+  color: rgba(255,220,120,0.25);
+}

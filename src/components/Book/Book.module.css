@@ -1,0 +1,198 @@
+.bookSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px 80px;
+}
+
+.siteTitle {
+  font-family: 'Lora', serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #fdf6e8;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 24px rgba(212,146,42,0.35);
+  text-align: center;
+}
+.siteTitle span { color: #e8b860; }
+
+.siteSubtitle {
+  font-size: 0.8rem;
+  color: rgba(232,184,96,0.65);
+  margin-bottom: 42px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.bookWrapper {
+  width: 880px;
+  max-width: 100%;
+}
+
+/* ── BOOK ── */
+.book {
+  width: 100%;
+  height: 540px;
+  display: flex;
+  filter: drop-shadow(0 30px 70px rgba(60,30,0,0.5)) drop-shadow(0 10px 25px rgba(60,30,0,0.3));
+  position: relative;
+}
+
+/* Spine */
+.spine {
+  width: 28px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #c47a1a 0%, #8a5010 50%, #c47a1a 100%);
+  border-radius: 5px 0 0 5px;
+  position: relative;
+  z-index: 20;
+  box-shadow: -4px 0 14px rgba(0,0,0,0.55), inset 2px 0 8px rgba(255,200,80,0.1);
+}
+.spine::after {
+  content: 'PORTFOLIO · CAUÃ CAVALCANTE';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  white-space: nowrap;
+  font-size: 0.42rem;
+  letter-spacing: 3px;
+  color: rgba(255,220,120,0.45);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Pages edge */
+.pagesEdge {
+  width: 7px;
+  flex-shrink: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    #ecddb8 0, #ecddb8 1px,
+    #fdf5e0 1px, #fdf5e0 2.2px
+  );
+  box-shadow: inset -2px 0 5px rgba(0,0,0,0.08);
+}
+
+/* ── LEFT PAGE ── */
+.pageLeft {
+  flex: 1;
+  background: #fffdf7;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid #e8d9b8;
+  box-shadow: inset -6px 0 18px rgba(0,0,0,0.04);
+}
+
+/* Left dynamic content area */
+.leftContentArea {
+  position: absolute;
+  top: 0;
+  left: 47%;
+  right: 0;
+  height: 100%;
+  overflow: hidden;
+  padding: 22px 18px 28px 16px;
+}
+
+/* ── RIGHT PAGE WRAPPER ── */
+.rightWrapper {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  perspective: 1400px;
+  overflow: hidden;
+}
+
+.pageRight {
+  position: absolute;
+  inset: 0;
+  background: #fffdf7;
+  border-left: 1px solid #e8d9b8;
+  overflow: hidden;
+  will-change: transform, opacity;
+  box-shadow: -4px 0 14px rgba(0,0,0,0.07);
+}
+
+.rightContentArea {
+  position: absolute;
+  inset: 0;
+  padding: 22px 20px 28px 20px;
+  overflow: hidden;
+}
+
+/* Corner fold */
+.cornerFold {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 28px; height: 28px;
+  background: linear-gradient(225deg, #f0e0bb 50%, transparent 50%);
+  cursor: pointer;
+  z-index: 30;
+  transition: width 0.2s, height 0.2s;
+}
+.cornerFold:hover { width: 44px; height: 44px; }
+
+/* Page number */
+.pageNum {
+  position: absolute;
+  bottom: 10px;
+  font-size: 0.58rem;
+  color: #9a7346;
+  font-weight: 500;
+  user-select: none;
+  z-index: 10;
+}
+
+/* ── CONTROLS ── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 28px;
+  justify-content: center;
+}
+
+.navBtn {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: rgba(212,146,42,0.1);
+  border: 1.5px solid rgba(212,146,42,0.3);
+  color: #e8b860;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.22s;
+  backdrop-filter: blur(4px);
+}
+.navBtn:hover:not(:disabled) {
+  background: #d4922a;
+  border-color: #d4922a;
+  color: white;
+  transform: scale(1.07);
+}
+.navBtn:disabled { opacity: 0.22; cursor: not-allowed; }
+
+.indicator {
+  font-size: 0.78rem;
+  color: rgba(255,240,180,0.55);
+  font-weight: 500;
+  min-width: 64px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .book { height: auto; min-height: 420px; flex-wrap: wrap; }
+  .bookWrapper { width: 100%; }
+  .spine { width: 100%; height: 10px; border-radius: 5px 5px 0 0; }
+  .pagesEdge { display: none; }
+  .pageLeft { width: 100%; height: 420px; flex: none; }
+  .rightWrapper { width: 100%; flex: none; height: 360px; }
+  .leftContentArea { left: 0; height: 50%; top: 50%; }
+  .siteTitle { font-size: 1.5rem; }
+}
