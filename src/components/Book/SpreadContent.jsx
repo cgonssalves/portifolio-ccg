@@ -232,6 +232,9 @@ function EventPage({ event, onSave }) {
         {event.title}
       </h3>
 
+      {/* Carrossel — imagem primeiro, igual às páginas de projeto */}
+      <EventCarousel photos={event.photos || []} />
+
       <p className={styles.eventDesc}>{event.description}</p>
 
       {/* Tags — mesmo estilo dos projetos */}
@@ -242,9 +245,6 @@ function EventPage({ event, onSave }) {
           ))}
         </div>
       )}
-
-      {/* Carrossel com mesma altura das imagens de projeto */}
-      <EventCarousel photos={event.photos || []} />
 
       {/*
       ════════════════════════════════════════════════════════════

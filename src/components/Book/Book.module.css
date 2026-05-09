@@ -122,7 +122,7 @@
   background: #fffdf7;
   border-left: 1px solid #e8d9b8;
   overflow: hidden;
-  perspective: 2000px;   /* profundidade 3D */
+  perspective: 1400px;   /* profundidade 3D */
 }
 
 /* Conteúdo de fundo (destino do flip) */
@@ -172,44 +172,62 @@
 /* ── Animação AVANÇAR: dobra da direita para a esquerda ── */
 @keyframes flipForward {
   0%   {
-    transform: rotateY(0deg);
+    transform: rotateY(0deg) translateZ(0px);
     box-shadow: none;
+    filter: none;
   }
-  30%  {
-    box-shadow: -12px 0 30px rgba(0,0,0,0.18);
+  20%  {
+    box-shadow: -10px 0 25px rgba(60,20,0,0.15);
+    filter: brightness(0.97);
   }
-  60%  {
-    box-shadow: -20px 0 50px rgba(0,0,0,0.25);
+  45%  {
+    box-shadow: -30px 0 70px rgba(60,20,0,0.32), 6px 0 12px rgba(60,20,0,0.08);
+    filter: brightness(0.91);
+    transform: rotateY(-90deg) translateZ(8px);
+  }
+  75%  {
+    box-shadow: -12px 0 30px rgba(60,20,0,0.14);
+    filter: brightness(0.96);
   }
   100% {
-    transform: rotateY(-180deg);
+    transform: rotateY(-180deg) translateZ(0px);
     box-shadow: none;
+    filter: none;
   }
 }
 
 /* ── Animação VOLTAR: dobra da esquerda para a direita ── */
 @keyframes flipBackward {
   0%   {
-    transform: rotateY(-180deg);
+    transform: rotateY(-180deg) translateZ(0px);
     box-shadow: none;
+    filter: none;
   }
-  30%  {
-    box-shadow: -12px 0 30px rgba(0,0,0,0.18);
+  20%  {
+    box-shadow: -10px 0 25px rgba(60,20,0,0.15);
+    filter: brightness(0.97);
   }
-  60%  {
-    box-shadow: -20px 0 50px rgba(0,0,0,0.25);
+  45%  {
+    box-shadow: -30px 0 70px rgba(60,20,0,0.32), 6px 0 12px rgba(60,20,0,0.08);
+    filter: brightness(0.91);
+    transform: rotateY(-90deg) translateZ(8px);
+  }
+  75%  {
+    box-shadow: -12px 0 30px rgba(60,20,0,0.14);
+    filter: brightness(0.96);
   }
   100% {
-    transform: rotateY(0deg);
+    transform: rotateY(0deg) translateZ(0px);
     box-shadow: none;
+    filter: none;
   }
 }
 
 .flipOut {
-  animation: flipForward 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000) forwards;
+  animation: flipForward 0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 .flipIn {
-  animation: flipBackward 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000) forwards;
+  animation: flipBackward 0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 
 /* Página esquerda */
@@ -243,4 +261,77 @@
   padding: 22px 20px 28px 20px;
   overflow: hidden;
   background: #fffdf7;
+}
+
+/* Número de página */
+.pageNum {
+  position: absolute;
+  bottom: 10px;
+  font-size: 0.52rem;
+  color: var(--text-light);
+  font-family: 'Lora', serif;
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+  z-index: 20;
+}
+
+/* Orelha de dobra no canto inferior direito */
+.cornerFold {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 15;
+  background: linear-gradient(225deg, var(--cream-dark) 50%, transparent 50%);
+  transition: width 0.2s, height 0.2s;
+}
+.cornerFold:hover { width: 30px; height: 30px; }
+
+/* ── Botões de navegação nos cantos inferiores do livro ── */
+.navBtn {
+  position: absolute;
+  bottom: 14px;
+  z-index: 50;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cream-dark);
+  background: rgba(253, 246, 232, 0.93);
+  color: var(--warm-brown);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s, opacity 0.2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.navBtn:hover:not(:disabled) {
+  background: var(--amber);
+  color: white;
+  border-color: var(--amber);
+  transform: scale(1.1);
+}
+.navBtn:disabled { opacity: 0.2; cursor: not-allowed; }
+/* canto inferior esquerdo — dentro da página esquerda */
+.navBtnPrev { left: 46px; }
+/* canto inferior direito — dentro da página direita */
+.navBtnNext { right: 14px; }
+
+/* Sombra que cai na página esquerda durante o flip para frente */
+.flipShadowLeft {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to left, rgba(40,15,0,0.14) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 5;
+  animation: leftPageShadow 0.7s ease forwards;
+}
+@keyframes leftPageShadow {
+  0%   { opacity: 0; }
+  35%  { opacity: 1; }
+  100% { opacity: 0; }
 }
