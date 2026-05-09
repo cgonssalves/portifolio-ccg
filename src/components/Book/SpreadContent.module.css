@@ -409,7 +409,7 @@
    ──────────────────────────────────────────────────── */
 .pageImg {
   width: 100%;
-  height: 120px;           /* altura fixa = alinhamento perfeito entre páginas */
+  height: 200px;           /* altura fixa = alinhamento perfeito entre páginas */
   background: linear-gradient(135deg, var(--amber-pale) 0%, var(--cream-dark) 100%);
   border-radius: 8px;
   border: 1px solid var(--line-color);
