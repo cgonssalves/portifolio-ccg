@@ -163,17 +163,36 @@ export default function Book() {
           <div className={styles.spine} />
           <div className={styles.pagesEdge} />
 
-          {/* ── PÁGINA ESQUERDA (estática) ── */}
+          {/* ── PÁGINA ESQUERDA ── */}
           <div className={`${styles.pageLeft} ${cur.isCoverSpread ? styles.pageLeftCover : ''}`}>
-            {cur.isCoverSpread
-              ? cur.leftEl   /* amber cover */
-              : <div className={styles.pageContent}>{cur.leftEl}</div>
-            }
+
+            {/* Fundo: durante flip para trás mostra o left do spread anterior */}
+            {(() => {
+              const bgLeft = (flipping && flipDir < 0 && prev) ? prev.leftEl : cur.leftEl;
+              const isCover = (flipping && flipDir < 0 && prev?.isCoverSpread) || cur.isCoverSpread;
+              return isCover
+                ? bgLeft
+                : <div className={styles.pageContent}>{bgLeft}</div>;
+            })()}
+
             {!cur.isCoverSpread && (
               <span className={styles.pageNum} style={{left:'50%', transform:'translateX(-50%)'}}>
                 {cur.lNum}
               </span>
             )}
+
+            {/* Folha que desdobra/dobra do lado esquerdo — espelho da direita */}
+            {flipping && (
+              <div className={`${styles.flipPageLeft} ${flipDir > 0 ? styles.flipLeftIn : styles.flipLeftOut}`}>
+                <div className={styles.pageContent}>
+                  {flipDir > 0
+                    ? (next ? next.leftEl : null)
+                    : cur.leftEl
+                  }
+                </div>
+              </div>
+            )}
+
             {flipping && flipDir > 0 && (
               <div className={styles.flipShadowLeft} />
             )}
@@ -182,37 +201,22 @@ export default function Book() {
           {/* ── PÁGINA DIREITA — dobra como um livro real ── */}
           <div className={styles.pageRight}>
 
-            {/* Página de fundo (destino do flip) */}
+            {/* Fundo (revelado conforme a folha dobra para a frente) */}
             <div className={styles.pageContent}>
               {flipping
                 ? (flipDir > 0
-                    ? (next  ? next.leftEl  : cur.rightEl)   // avançar: mostra LEFT do próximo
-                    : (prev  ? prev.rightEl : cur.rightEl))  // voltar:  mostra RIGHT do anterior
+                    ? (next  ? next.rightEl  : cur.rightEl)
+                    : (prev  ? prev.rightEl  : cur.rightEl))
                 : cur.rightEl
               }
             </div>
 
-            {/*
-              .flipPage = a "folha" que vira, igual ao .cover do Turn.js
-              position: absolute, width: 50% do container (= página inteira da direita),
-              height: 100%, transform-origin: right
-              → quando rotateY vai de 0 a -180, ela dobra para a esquerda como papel real
-            */}
+            {/* Folha que dobra/desdobra — metade direita da virada */}
             <div className={`${styles.flipPage} ${flipping ? (flipDir > 0 ? styles.flipOut : styles.flipIn) : ''}`}>
-              <div className={styles.flipFront}>
-                {/* Frente da folha = conteúdo atual da direita */}
-                <div className={styles.pageContent}>{cur.rightEl}</div>
-                <span className={styles.pageNum} style={{right:12}}>{cur.rNum}</span>
+              <div className={styles.pageContent}>
+                {flipping && flipDir < 0 && prev ? prev.rightEl : cur.rightEl}
               </div>
-              <div className={styles.flipBack}>
-                {/* Verso da folha = conteúdo esquerdo do próximo spread */}
-                <div className={styles.pageContent} style={{transform:'scaleX(-1)'}}>
-                  {flipDir > 0
-                    ? (next ? next.leftEl : null)
-                    : (prev ? prev.rightEl : null)
-                  }
-                </div>
-              </div>
+              {!flipping && <span className={styles.pageNum} style={{right:12}}>{cur.rNum}</span>}
             </div>
 
             {spread < 7 && !flipping && (

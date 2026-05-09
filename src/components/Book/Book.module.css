@@ -31,6 +31,15 @@
   max-width: 100%;
 }
 
+/* ── BOOK OPENING — livro se abre na primeira carga ── */
+@keyframes bookOpen {
+  0%   { transform: scaleX(0.04); filter: brightness(0.08) drop-shadow(0 30px 70px rgba(60,30,0,0.5)); opacity: 0; }
+  18%  { opacity: 1; }
+  40%  { filter: brightness(0.55) drop-shadow(0 30px 70px rgba(60,30,0,0.5)); }
+  82%  { transform: scaleX(1.012); filter: brightness(1.02) drop-shadow(0 30px 70px rgba(60,30,0,0.5)) drop-shadow(0 10px 25px rgba(60,30,0,0.3)); }
+  100% { transform: scaleX(1);     filter: brightness(1)    drop-shadow(0 30px 70px rgba(60,30,0,0.5)) drop-shadow(0 10px 25px rgba(60,30,0,0.3)); }
+}
+
 /* ── BOOK ── */
 .book {
   width: 100%;
@@ -38,6 +47,7 @@
   display: flex;
   filter: drop-shadow(0 30px 70px rgba(60,30,0,0.5)) drop-shadow(0 10px 25px rgba(60,30,0,0.3));
   position: relative;
+  animation: bookOpen 1s cubic-bezier(0.34, 1.15, 0.64, 1) both;
 }
 
 /* Spine */
@@ -85,6 +95,7 @@
   overflow: hidden;
   border-right: 1px solid #e8d9b8;
   box-shadow: inset -6px 0 18px rgba(0,0,0,0.04);
+  perspective: 1400px;
 }
 
 /* Slot que ocupa a página esquerda inteira
@@ -169,65 +180,57 @@
   overflow: hidden;
 }
 
-/* ── Animação AVANÇAR: dobra da direita para a esquerda ── */
+/* ── Animação AVANÇAR: página direita dobra até a lombada (0° → -90°) ── */
 @keyframes flipForward {
-  0%   {
-    transform: rotateY(0deg) translateZ(0px);
-    box-shadow: none;
-    filter: none;
-  }
-  20%  {
-    box-shadow: -10px 0 25px rgba(60,20,0,0.15);
-    filter: brightness(0.97);
-  }
-  45%  {
-    box-shadow: -30px 0 70px rgba(60,20,0,0.32), 6px 0 12px rgba(60,20,0,0.08);
-    filter: brightness(0.91);
-    transform: rotateY(-90deg) translateZ(8px);
-  }
-  75%  {
-    box-shadow: -12px 0 30px rgba(60,20,0,0.14);
-    filter: brightness(0.96);
-  }
-  100% {
-    transform: rotateY(-180deg) translateZ(0px);
-    box-shadow: none;
-    filter: none;
-  }
+  0%   { transform: rotateY(0deg);   filter: brightness(1); }
+  50%  {                              filter: brightness(0.87); }
+  100% { transform: rotateY(-90deg); filter: brightness(1); }
 }
 
-/* ── Animação VOLTAR: dobra da esquerda para a direita ── */
+/* ── Animação VOLTAR: página direita desdobra da lombada (−90° → 0°) ── */
 @keyframes flipBackward {
-  0%   {
-    transform: rotateY(-180deg) translateZ(0px);
-    box-shadow: none;
-    filter: none;
-  }
-  20%  {
-    box-shadow: -10px 0 25px rgba(60,20,0,0.15);
-    filter: brightness(0.97);
-  }
-  45%  {
-    box-shadow: -30px 0 70px rgba(60,20,0,0.32), 6px 0 12px rgba(60,20,0,0.08);
-    filter: brightness(0.91);
-    transform: rotateY(-90deg) translateZ(8px);
-  }
-  75%  {
-    box-shadow: -12px 0 30px rgba(60,20,0,0.14);
-    filter: brightness(0.96);
-  }
-  100% {
-    transform: rotateY(0deg) translateZ(0px);
-    box-shadow: none;
-    filter: none;
-  }
+  0%   { transform: rotateY(-90deg); filter: brightness(1); }
+  50%  {                              filter: brightness(0.87); }
+  100% { transform: rotateY(0deg);   filter: brightness(1); }
+}
+
+/* ── Animação AVANÇAR: página esquerda desdobra da lombada (90° → 0°) ── */
+@keyframes flipLeftIn {
+  0%   { transform: rotateY(90deg); filter: brightness(1); }
+  50%  {                             filter: brightness(0.87); }
+  100% { transform: rotateY(0deg);  filter: brightness(1); }
+}
+
+/* ── Animação VOLTAR: página esquerda dobra até a lombada (0° → 90°) ── */
+@keyframes flipLeftOut {
+  0%   { transform: rotateY(0deg);  filter: brightness(1); }
+  50%  {                             filter: brightness(0.87); }
+  100% { transform: rotateY(90deg); filter: brightness(1); }
 }
 
 .flipOut {
-  animation: flipForward 0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: flipForward  0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 .flipIn {
   animation: flipBackward 0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+.flipLeftIn {
+  animation: flipLeftIn   0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+.flipLeftOut {
+  animation: flipLeftOut  0.7s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+/* Folha espelhada do lado esquerdo — desdobra/dobra sincronizada com a direita */
+.flipPageLeft {
+  position: absolute;
+  inset: 0;
+  background: #fffdf7;
+  transform-origin: right center;
+  transform-style: preserve-3d;
+  z-index: 10;
+  pointer-events: none;
+  border-right: 1px solid #e8d9b8;
 }
 
 /* Página esquerda */
@@ -238,6 +241,7 @@
   position: relative;
   overflow: hidden;
   border-right: 1px solid #e8d9b8;
+  perspective: 1400px;
 }
 .pageLeftCover {
   background: transparent;   /* cover amber preenche tudo */
