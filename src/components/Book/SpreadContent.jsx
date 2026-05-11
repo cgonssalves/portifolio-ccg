@@ -9,7 +9,7 @@ import styles from './SpreadContent.module.css';
 
 // ════════════════════════════════════════════════════════════
 // [EDIT-IMPORT] — Comente esta linha para desativar o painel
-import EditPanel from '../EditPanel/EditPanel';
+//import EditPanel from '../EditPanel/EditPanel';
 // ════════════════════════════════════════════════════════════
 
 /* ─────────────────────────────────────────
@@ -169,7 +169,7 @@ function ProjectPage({ project, side, onSave }) {
           Para desativar: comente do <EditPanel até [EDIT-RENDER-END]
           ════════════════════════════════════════════════════════════
           */}
-          <EditPanel projectId={project.id} projectData={project} onSave={onSave} />
+          {/* <EditPanel projectId={project.id} projectData={project} onSave={onSave} /> */}
           {/* ════ [EDIT-RENDER-END] ════ */}
         </>
       )}
@@ -297,7 +297,7 @@ function EventPage({ event, onSave }) {
       Para desativar: comente do <EditPanel até [EDIT-RENDER-END]
       ════════════════════════════════════════════════════════════
       */}
-      <EditPanel projectId={event.id} projectData={event} onSave={onSave} isEvent={true} />
+      {/* <EditPanel projectId={event.id} projectData={event} onSave={onSave} isEvent={true} /> */}
       {/* ════ [EDIT-RENDER-END] ════ */}
     </div>
   );
