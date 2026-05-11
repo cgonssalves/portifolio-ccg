@@ -87,11 +87,11 @@ export default function Book() {
     setFlipDir(delta);
     setFlipping(true);
 
-    // Após a animação CSS terminar (700ms), troca o conteúdo
+    // Direita: 1s, Esquerda: delay 1s + duração 1s → total 2s
     setTimeout(() => {
       setSpread(next);
       setFlipping(false);
-    }, 700);
+    }, 2000);
   }, [spread, flipping]);
 
   const goToContact = () => { if (!flipping) navigate(7 - spread); };
@@ -175,7 +175,7 @@ export default function Book() {
                 : <div className={styles.pageContent}>{bgLeft}</div>;
             })()}
 
-            {!cur.isCoverSpread && (
+            {!cur.isCoverSpread && !flipping && (
               <span className={styles.pageNum} style={{left:'50%', transform:'translateX(-50%)'}}>
                 {cur.lNum}
               </span>
@@ -203,10 +203,8 @@ export default function Book() {
 
             {/* Fundo (revelado conforme a folha dobra para a frente) */}
             <div className={styles.pageContent}>
-              {flipping
-                ? (flipDir > 0
-                    ? (next  ? next.rightEl  : cur.rightEl)
-                    : (prev  ? prev.rightEl  : cur.rightEl))
+              {flipping && flipDir > 0
+                ? (next ? next.rightEl : cur.rightEl)
                 : cur.rightEl
               }
             </div>
@@ -222,7 +220,6 @@ export default function Book() {
             {spread < 7 && !flipping && (
               <div className={styles.cornerFold} onClick={() => navigate(1)} title="Próxima página" />
             )}
-            <span className={styles.pageNum} style={{right:12}}>{cur.rNum}</span>
           </div>
 
           {/* Botões nos cantos inferiores do livro */}
