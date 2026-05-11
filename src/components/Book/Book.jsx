@@ -183,7 +183,7 @@ export default function Book() {
 
             {/* Folha que desdobra/dobra do lado esquerdo — espelho da direita */}
             {flipping && (
-              <div className={`${styles.flipPageLeft} ${flipDir > 0 ? styles.flipLeftIn : styles.flipLeftOut}`}>
+              <div className={`${styles.flipPageLeft} ${flipDir > 0 ? styles.flipLeftIn : styles.flipLeftOutFirst}`}>
                 <div className={styles.pageContent}>
                   {flipDir > 0
                     ? (next ? next.leftEl : null)
@@ -210,7 +210,7 @@ export default function Book() {
             </div>
 
             {/* Folha que dobra/desdobra — metade direita da virada */}
-            <div className={`${styles.flipPage} ${flipping ? (flipDir > 0 ? styles.flipOut : styles.flipIn) : ''}`}>
+            <div className={`${styles.flipPage} ${flipping ? (flipDir > 0 ? styles.flipOut : styles.flipInDelayed) : ''}`}>
               <div className={styles.pageContent}>
                 {flipping && flipDir < 0 && prev ? prev.rightEl : cur.rightEl}
               </div>
