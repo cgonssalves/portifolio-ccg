@@ -20,10 +20,10 @@ import styles from './Book.module.css';
    ═══════════════════════════════════════════════════════════ */
 const INIT = {
   agrosense: {
-    id:'agrosense', name:'Agrosense', tagline:'Monitoramento agrícola inteligente',
-    tech:'React · Node.js · IoT · MQTT',
-    description:'Plataforma de monitoramento agrícola em tempo real com sensores IoT. Coleta dados de temperatura, umidade e solo, exibindo dashboards interativos para tomada de decisão no campo.',
-    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:null,
+    id:'agrosense', name:'AgroGestão', tagline:'SaaS de controle financeiro para o campo',
+    tech:'TypeScript · JavaScript · React',
+    description:'Eu e minha equipe de desenvolvimento criamos um Saas de controle financeiro para um agricultor da minha cidade. Ele havia se cansado de usar planilhas convencionais e queria algo que fosse mais simples para que ele pudesse fazer um controle de gastos.\n\nNosso trabalho foi criar um aplicativo desktop onde ele inseria os dados dos seus clientes, das suas plantações, vendas e gastos. Com isso ele consegue visualizar através de tabelas e gráficos o seu lucro e despesas, consegue acessar o histórico de vendas de gastos passados e fazer comparações, atualizar preços e até ter um controle de seus funcionários\n\nOBS: O alerta em vermelho sobre \"Tempo de teste\" só está ali pois demos um tempo de teste grátis para o cliente, ao final do tempo ele conseguia ver todas as informações que já foram inseridas, porem não conseguia inserir mais nenhuma',
+    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/HIdAQlAn7Dc',
   },
   jornada: {
     id:'jornada', name:'Jornada Tech', tagline:'Trilhas de aprendizado em tecnologia',
@@ -87,11 +87,11 @@ export default function Book() {
     setFlipDir(delta);
     setFlipping(true);
 
-    // Direita: 0.5s, Esquerda: delay 0.5s + duração 0.5s → total 1s
+    // Direita: 0.25s, Esquerda: delay 0.25s + duração 0.25s → total 0.5s
     setTimeout(() => {
       setSpread(next);
       setFlipping(false);
-    }, 1000);
+    }, 500);
   }, [spread, flipping]);
 
   const goToContact = () => { if (!flipping) navigate(7 - spread); };
