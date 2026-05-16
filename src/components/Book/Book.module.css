@@ -208,26 +208,26 @@
   100% { transform: rotateY(90deg); filter: brightness(1); }
 }
 
-/* AVANÇAR: direita dobra primeiro (sem delay), esquerda depois (delay 0.5s) */
+/* AVANÇAR: direita dobra primeiro (sem delay), esquerda depois (delay 0.25s) */
 .flipOut {
-  animation: flipForward  0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: flipForward  0.25s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 .flipLeftIn {
-  animation: flipLeftIn  0.5s cubic-bezier(0.42, 0, 0.58, 1) 0.5s both;
+  animation: flipLeftIn  0.25s cubic-bezier(0.42, 0, 0.58, 1) 0.25s both;
 }
-/* VOLTAR: esquerda dobra primeiro (sem delay), direita depois (delay 0.5s) */
+/* VOLTAR: esquerda dobra primeiro (sem delay), direita depois (delay 0.25s) */
 .flipLeftOutFirst {
-  animation: flipLeftOut 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0s both;
+  animation: flipLeftOut 0.25s cubic-bezier(0.42, 0, 0.58, 1) 0s both;
 }
 .flipInDelayed {
-  animation: flipBackward 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0.5s both;
+  animation: flipBackward 0.25s cubic-bezier(0.42, 0, 0.58, 1) 0.25s both;
 }
 /* legado — não usado */
 .flipIn {
-  animation: flipBackward 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  animation: flipBackward 0.25s cubic-bezier(0.42, 0, 0.58, 1) forwards;
 }
 .flipLeftOut {
-  animation: flipLeftOut 0.5s cubic-bezier(0.42, 0, 0.58, 1) 0.5s both;
+  animation: flipLeftOut 0.25s cubic-bezier(0.42, 0, 0.58, 1) 0.25s both;
 }
 
 /* Folha espelhada do lado esquerdo — desdobra/dobra sincronizada com a direita */
@@ -341,7 +341,7 @@
   background: linear-gradient(to left, rgba(40,15,0,0.14) 0%, transparent 55%);
   pointer-events: none;
   z-index: 5;
-  animation: leftPageShadow 0.5s ease forwards;
+  animation: leftPageShadow 0.25s ease forwards;
 }
 @keyframes leftPageShadow {
   0%   { opacity: 0; }
