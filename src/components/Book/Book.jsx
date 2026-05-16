@@ -87,11 +87,11 @@ export default function Book() {
     setFlipDir(delta);
     setFlipping(true);
 
-    // Direita: 1s, Esquerda: delay 1s + duração 1s → total 2s
+    // Direita: 0.5s, Esquerda: delay 0.5s + duração 0.5s → total 1s
     setTimeout(() => {
       setSpread(next);
       setFlipping(false);
-    }, 2000);
+    }, 1000);
   }, [spread, flipping]);
 
   const goToContact = () => { if (!flipping) navigate(7 - spread); };
