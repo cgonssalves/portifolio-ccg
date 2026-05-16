@@ -111,7 +111,7 @@ function ProjectPage({ project, side, onSave }) {
     <div className={styles.page}>
 
       <div className={styles.projHeader}>
-        <span className={styles.projTag}>{(project.tech || '').split('·')[0].trim()}</span>
+        <span className={styles.projTag}>{project.tag || (project.tech || '').split('·')[0].trim()}</span>
         <span className={styles.projLabel}>Projeto</span>
       </div>
 
@@ -181,7 +181,7 @@ export function AgrosenseLeft({ p }) {
   return (
     <div className={styles.page}>
       <div className={styles.projHeader}>
-        <span className={styles.projTag}>{(p.tech || '').split('·')[0].trim()}</span>
+        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
         <span className={styles.projLabel}>Projeto</span>
       </div>
       <div className={styles.projTitleBig}>{p.name}</div>
@@ -202,7 +202,7 @@ export function AgrosenseRight({ p }) {
   return (
     <div className={styles.page}>
       <div className={styles.projHeader}>
-        <span className={styles.projTag}>{(p.tech || '').split('·')[0].trim()}</span>
+        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
         <span className={styles.projLabel}>Projeto</span>
       </div>
       <p className={styles.projDesc} style={{ whiteSpace: 'pre-line' }}>{p.description}</p>
@@ -215,8 +215,44 @@ export function AgrosenseRight({ p }) {
     </div>
   );
 }
-export const JornadaLeft    = ({ p, onSave }) => <ProjectPage project={p} side="left"  onSave={onSave} />;
-export const JornadaRight   = ({ p, onSave }) => <ProjectPage project={p} side="right" onSave={onSave} />;
+export function JornadaLeft({ p }) {
+  return (
+    <div className={styles.page}>
+      <div className={styles.projHeader}>
+        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
+        <span className={styles.projLabel}>Projeto</span>
+      </div>
+      <div className={styles.projTitleBig}>{p.name}</div>
+      <div className={styles.projSubtitle}>{p.tagline}</div>
+      <div className={`${styles.pageImg} ${styles.pageImgFill}`}>
+        <iframe src={p.video} title={p.name} frameBorder="0" allowFullScreen />
+      </div>
+      <div className={styles.techBadges}>
+        {(p.tech || '').split('·').map(t => (
+          <span key={t} className={styles.techBadge}>{t.trim()}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export function JornadaRight({ p }) {
+  return (
+    <div className={styles.page}>
+      <div className={styles.projHeader}>
+        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
+        <span className={styles.projLabel}>Projeto</span>
+      </div>
+      <p className={styles.projDesc} style={{ whiteSpace: 'pre-line' }}>{p.description}</p>
+      <div className={styles.projActions}>
+        <a href={p.github} target="_blank" rel="noopener noreferrer"
+          className={`${styles.pbtn} ${styles.pbtnAmber}`}>
+          <FaGithub /> Ver no GitHub
+        </a>
+      </div>
+    </div>
+  );
+}
 export const PixelLeft      = ({ p, onSave }) => <ProjectPage project={p} side="left"  onSave={onSave} />;
 export const PixelRight     = ({ p, onSave }) => <ProjectPage project={p} side="right" onSave={onSave} />;
 export const VelhaLeft      = ({ p, onSave }) => <ProjectPage project={p} side="left"  onSave={onSave} />;

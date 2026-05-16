@@ -7,6 +7,7 @@ export const initialProjects = {
     id: 'agrosense',
     name: 'AgroGestão',
     tagline: 'SaaS de controle financeiro para o campo',
+    tag: 'SaaS',
     tech: 'TypeScript · JavaScript · React',
     description:
       'Eu e minha equipe de desenvolvimento criamos um Saas de controle financeiro para um agricultor da minha cidade. Ele havia se cansado de usar planilhas convencionais e queria algo que fosse mais simples para que ele pudesse fazer um controle de gastos.\n\nNosso trabalho foi criar um aplicativo desktop onde ele inseria os dados dos seus clientes, das suas plantações, vendas e gastos. Com isso ele consegue visualizar através de tabelas e gráficos o seu lucro e despesas, consegue acessar o histórico de vendas de gastos passados e fazer comparações, atualizar preços e até ter um controle de seus funcionários\n\nOBS: O alerta em vermelho sobre "Tempo de teste" só está ali pois demos um tempo de teste grátis para o cliente, ao final do tempo ele conseguia ver todas as informações que já foram inseridas, porem não conseguia inserir mais nenhuma',
@@ -19,13 +20,14 @@ export const initialProjects = {
     id: 'jornada',
     name: 'Jornada Tech',
     tagline: 'Trilhas de aprendizado em tecnologia',
-    tech: 'React · Firebase · Tailwind CSS',
+    tag: 'Site',
+    tech: 'TypeScript · JavaScript · React · Supabase · Vercel',
     description:
-      'Aplicação web para guiar estudantes em trilhas de aprendizado de tecnologia. Sistema de progresso, quizzes e certificados digitais ao concluir cada etapa.',
+      'Eu e dois amigos fizemos esse site para a semana acadêmica do meu curso, fizemos para reunir os eventos que estariam sendo realizados, cursos que estariam disponíveis e palestras em um só lugar e para que aqueles que tivessem interesse em participar pudessem realizar a inscrição.\n\nNo caso como o site deveria armazenar nome, e-mail, e senha dos cadastrados utilizamos o Supabase como banco de dados e hospedamos no Vercel.\n\nA parte de pagamentos fizemos manual, disponibilizamos um QR code e uma chave pix, e o participante deveria anexar o comprovante no e-mail que mandaria para confirmar sua presença no evento. A validação do pagamento era realizada e atualizada no DB.\n\nAssim quando aconteceu a semana do evento imprimíamos uma lista baseado nas informações do DB de quem já havia pago e então a pessoa era autorizada a entrar.',
     github: 'https://github.com/cgonssalves',
     imgLeft: null,
     imgRight: null,
-    video: null,
+    video: 'https://www.youtube.com/embed/mYWEqOhNHOc',
   },
   pixel: {
     id: 'pixel',
