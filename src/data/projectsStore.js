@@ -5,15 +5,15 @@
 export const initialProjects = {
   agrosense: {
     id: 'agrosense',
-    name: 'Agrosense',
-    tagline: 'Monitoramento agrícola inteligente',
-    tech: 'React · Node.js · IoT · MQTT',
+    name: 'AgroGestão',
+    tagline: 'SaaS de controle financeiro para o campo',
+    tech: 'TypeScript · JavaScript · React',
     description:
-      'Plataforma de monitoramento agrícola em tempo real com sensores IoT. Coleta dados de temperatura, umidade e solo, exibindo dashboards interativos para tomada de decisão no campo.',
+      'Eu e minha equipe de desenvolvimento criamos um Saas de controle financeiro para um agricultor da minha cidade. Ele havia se cansado de usar planilhas convencionais e queria algo que fosse mais simples para que ele pudesse fazer um controle de gastos.\n\nNosso trabalho foi criar um aplicativo desktop onde ele inseria os dados dos seus clientes, das suas plantações, vendas e gastos. Com isso ele consegue visualizar através de tabelas e gráficos o seu lucro e despesas, consegue acessar o histórico de vendas de gastos passados e fazer comparações, atualizar preços e até ter um controle de seus funcionários\n\nOBS: O alerta em vermelho sobre "Tempo de teste" só está ali pois demos um tempo de teste grátis para o cliente, ao final do tempo ele conseguia ver todas as informações que já foram inseridas, porem não conseguia inserir mais nenhuma',
     github: 'https://github.com/cgonssalves',
     imgLeft: null,
     imgRight: null,
-    video: null,
+    video: 'https://www.youtube.com/embed/HIdAQlAn7Dc',
   },
   jornada: {
     id: 'jornada',
