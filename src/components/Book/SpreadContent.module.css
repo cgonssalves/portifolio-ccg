@@ -245,6 +245,37 @@
   margin-bottom: 10px;
 }
 
+/* ─── NASA SPACE APPS ─── */
+.nasaHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--amber);
+}
+.nasaTitle {
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hackathonBadge {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  background: var(--amber);
+  color: white;
+  padding: 3px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
 .carouselWrap {
   position: relative;
   width: 100%;
@@ -512,4 +543,16 @@
   height: 100%;
   border: none;
   display: block;
+}
+
+/* Pitch modal — larger than lightboxBox, covers most of the viewport */
+.pitchModal {
+  position: relative;
+  width: 1300px;
+  max-width: 96vw;
+  background: #0a0602;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(212,146,42,0.2);
+  animation: lbScaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

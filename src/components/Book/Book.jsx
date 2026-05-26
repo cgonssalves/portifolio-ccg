@@ -13,6 +13,10 @@ import {
   ContactLeft,   ContactRight,
 } from './SpreadContent';
 import styles from './Book.module.css';
+import nasaEvent1 from '../../assets/events/nasa/nasa-event1.jpg';
+import nasaEvent2 from '../../assets/events/nasa/nasa-event2.jpg';
+import nasaEvent3 from '../../assets/events/nasa/nasa-event3.jpg';
+import nasaEvent4 from '../../assets/events/nasa/nasa-event4.jpg';
 
 /* ═══════════════════════════════════════════════════════════
    [EDIT-BOOK] — DADOS EDITÁVEIS
@@ -53,8 +57,8 @@ const INIT = {
   },
   nasa: {
     id:'nasa', icon:'🚀', title:'NASA Space Apps',
-    description:'Hackathon global da NASA realizado em Ituiutaba — MG. Desenvolvimento de soluções para desafios espaciais e ambientais em 48 horas de imersão.',
-    tech:'', photos:[],
+    description:"Nos dias 04 e 05 de Outubro de 2025 eu e minha equipe de desenvolvedores participamos do HACKATHON da NASA o Space Apps onde nele poderíamos escolher um problema real enfrentado pela organização. Escolhemos o problema 'Will It Rain On My Parade?' onde deveríamos criar um aplicativo que responda se o clima vai estragar um evento planejado ao ar livre usando dados fornecidos de satélites da NASA e outras fontes. O vídeo do nosso pitch que estará anexado aqui em baixo via link.",
+    tech:'', photos:[nasaEvent1, nasaEvent2, nasaEvent3, nasaEvent4],
   },
   maratona: {
     id:'maratona', icon:'💻', title:'Maratona SBC',

@@ -1,8 +1,9 @@
 // src/components/Book/SpreadContent.jsx
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import {
   FaGithub, FaChevronLeft, FaChevronRight,
-  FaCode, FaGraduationCap, FaEnvelope, FaMapMarkerAlt, FaPhone, FaImage,
+  FaCode, FaGraduationCap, FaEnvelope, FaMapMarkerAlt, FaPhone, FaImage, FaYoutube,
 } from 'react-icons/fa';
 import { MdSchool } from 'react-icons/md';
 import styles from './SpreadContent.module.css';
@@ -267,6 +268,30 @@ function EventCarousel({ photos }) {
   const [idx, setIdx] = useState(0);
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIdx, setLbIdx] = useState(0);
+  const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  const startAutoPlay = useCallback(() => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setIdx(i => (i + 1) % photos.length);
+    }, 3000);
+  }, [photos.length]);
+
+  useEffect(() => {
+    if (photos.length > 1) startAutoPlay();
+    return () => {
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+    };
+  }, [photos.length, startAutoPlay]);
+
+  const handleNav = useCallback((newIdx) => {
+    setIdx(newIdx);
+    clearInterval(intervalRef.current);
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(startAutoPlay, 8000);
+  }, [startAutoPlay]);
 
   return (
     <>
@@ -300,18 +325,18 @@ function EventCarousel({ photos }) {
             {photos.length > 1 && (
               <>
                 <button className={`${styles.carouselCtrl} ${styles.cPrev}`}
-                  onClick={() => setIdx(i => (i - 1 + photos.length) % photos.length)}>
+                  onClick={() => handleNav((idx - 1 + photos.length) % photos.length)}>
                   <FaChevronLeft />
                 </button>
                 <button className={`${styles.carouselCtrl} ${styles.cNext}`}
-                  onClick={() => setIdx(i => (i + 1) % photos.length)}>
+                  onClick={() => handleNav((idx + 1) % photos.length)}>
                   <FaChevronRight />
                 </button>
                 <div className={styles.carouselDots}>
                   {photos.map((_, i) => (
                     <button key={i}
                       className={`${styles.cdot} ${i === idx ? styles.cdotActive : ''}`}
-                      onClick={() => setIdx(i)} />
+                      onClick={() => handleNav(i)} />
                   ))}
                 </div>
               </>
@@ -375,9 +400,58 @@ function EventPage({ event, onSave }) {
   );
 }
 
+/* ─────────────────────────────────────────────────────────────
+   NASA SPACE APPS — página esquerda (customizada)
+───────────────────────────────────────────────────────────── */
+function NasaLeft({ p }) {
+  const [pitchOpen, setPitchOpen] = useState(false);
+  return (
+    <div className={styles.page}>
+      <div className={styles.nasaHeader}>
+        <h3 className={styles.nasaTitle}>
+          <span style={{ fontSize:'1rem' }}>{p.icon}</span>
+          {p.title}
+        </h3>
+        <span className={styles.hackathonBadge}>HACKATHON</span>
+      </div>
+
+      <EventCarousel photos={p.photos || []} />
+
+      <p className={styles.eventDesc}>{p.description}</p>
+
+      <div className={styles.projActions}>
+        <button
+          className={`${styles.pbtn} ${styles.pbtnAmber}`}
+          onClick={() => setPitchOpen(true)}
+        >
+          <FaYoutube /> ver pitch do App
+        </button>
+      </div>
+
+      {pitchOpen && createPortal(
+        <div className={styles.lightboxOverlay} onClick={() => setPitchOpen(false)}>
+          <div className={styles.pitchModal} onClick={e => e.stopPropagation()}>
+            <button className={styles.lightboxClose} onClick={() => setPitchOpen(false)}>✕</button>
+            <div className={styles.lightboxVideo}>
+              <iframe
+                src="https://www.youtube.com/embed/0og6enpz63o"
+                title="NASA Space Apps Pitch"
+                frameBorder="0"
+                allowFullScreen
+                allow="autoplay; encrypted-media"
+              />
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+    </div>
+  );
+}
+
 // EventsLeft recebe o evento NASA, EventsRight recebe a Maratona
 // Cada um tem seu próprio botão Editar → sem duplicação
-export const EventsLeft  = ({ p, onSave }) => <EventPage event={p} onSave={onSave} />;
+export const EventsLeft  = ({ p, onSave }) => <NasaLeft p={p} />;
 export const EventsRight = ({ p, onSave }) => <EventPage event={p} onSave={onSave} />;
 
 /* ─────────────────────────────────────────
