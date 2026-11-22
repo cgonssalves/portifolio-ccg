@@ -28,14 +28,14 @@ const INIT = {
     tag:'SaaS',
     tech:'TypeScript · JavaScript · React',
     description:'Eu e minha equipe de desenvolvimento criamos um Saas de controle financeiro para um agricultor da minha cidade. Ele havia se cansado de usar planilhas convencionais e queria algo que fosse mais simples para que ele pudesse fazer um controle de gastos.\n\nNosso trabalho foi criar um aplicativo desktop onde ele inseria os dados dos seus clientes, das suas plantações, vendas e gastos. Com isso ele consegue visualizar através de tabelas e gráficos o seu lucro e despesas, consegue acessar o histórico de vendas de gastos passados e fazer comparações, atualizar preços e até ter um controle de seus funcionários\n\nOBS: O alerta em vermelho sobre \"Tempo de teste\" só está ali pois demos um tempo de teste grátis para o cliente, ao final do tempo ele conseguia ver todas as informações que já foram inseridas, porem não conseguia inserir mais nenhuma',
-    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/HIdAQlAn7Dc',
+    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/zQx7W-UIu9I',
   },
   jornada: {
-    id:'jornada', name:'Jornada Tech', tagline:'Trilhas de aprendizado em tecnologia',
+    id:'jornada', name:'Computa Hub', tagline:'Trilhas de aprendizado em tecnologia',
     tag:'Site',
     tech:'TypeScript · JavaScript · React · Supabase · Vercel',
     description:'Eu e dois amigos fizemos esse site para a semana acadêmica do meu curso, fizemos para reunir os eventos que estariam sendo realizados, cursos que estariam disponíveis e palestras em um só lugar e para que aqueles que tivessem interesse em participar pudessem realizar a inscrição.\n\nNo caso como o site deveria armazenar nome, e-mail, e senha dos cadastrados utilizamos o Supabase como banco de dados e hospedamos no Vercel.\n\nA parte de pagamentos fizemos manual, disponibilizamos um QR code e uma chave pix, e o participante deveria anexar o comprovante no e-mail que mandaria para confirmar sua presença no evento. A validação do pagamento era realizada e atualizada no DB.\n\nAssim quando aconteceu a semana do evento imprimíamos uma lista baseado nas informações do DB de quem já havia pago e então a pessoa era autorizada a entrar.',
-    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/mYWEqOhNHOc',
+    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/BcMwICYrfgk',
   },
   pixel: {
     id:'pixel', name:'UEMG Pixel', tagline:'Canvas colaborativo em tempo real',
@@ -56,13 +56,13 @@ const INIT = {
     github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:null,
   },
   nasa: {
-    id:'nasa', icon:'🚀', title:'NASA Space Apps',
+    id:'nasa', icon:'🚀', title:'NASA Space Apps 2025',
     description:"Nos dias 04 e 05 de Outubro de 2025 eu e minha equipe de desenvolvedores participamos do HACKATHON da NASA o Space Apps onde nele poderíamos escolher um problema real enfrentado pela organização. Escolhemos o problema 'Will It Rain On My Parade?' onde deveríamos criar um aplicativo que responda se o clima vai estragar um evento planejado ao ar livre usando dados fornecidos de satélites da NASA e outras fontes. O vídeo do nosso pitch que estará anexado aqui em baixo via link.",
     tech:'', photos:[nasaEvent1, nasaEvent2, nasaEvent3, nasaEvent4],
   },
   maratona: {
-    id:'maratona', icon:'💻', title:'Maratona SBC',
-    description:'Maratona de Programação da Sociedade Brasileira de Computação. Resolução de problemas algorítmicos em equipe sob pressão de tempo e raciocínio lógico.',
+    id:'nasa-2026', icon:'🚀', title:'NASA Space Apps 2026',
+    description:"Nos dias 14 e 15 de Novembro de 2026 eu e minha equipe de desenvolvedores participamos do HACKATHON da NASA o Space Apps onde nele poderíamos escolher um problema real enfrentado pela organização. Escolhemos o problema 'Interplanetary Survival Guide: Martian Map' onde deveríamos criar uma ferramenta integrada de mapas e rotas em Marte para apoiar missões humanas de exploração na superfície, usando dados de missões da NASA — no nosso caso, desenvolvendo o Mars Route Planner (MRP) para planejamento de rotas e estimativas de oxigênio e tempo. O vídeo do nosso pitch estará anexado aqui embaixo via link.",
     tech:'', photos:[],
   },
 };
