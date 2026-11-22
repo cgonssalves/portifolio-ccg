@@ -245,6 +245,31 @@
   margin-bottom: 10px;
 }
 
+.nasaAwards {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.nasaFinalistBadge {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 4px 8px;
+  border: 1px solid var(--cream-dark);
+  border-radius: 6px;
+  background: var(--amber-pale);
+  color: var(--warm-brown);
+  font-size: 0.56rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nasaFinalistBadge span:first-child { font-size: 0.8rem; }
 /* ─── NASA SPACE APPS ─── */
 .nasaHeader {
   display: flex;

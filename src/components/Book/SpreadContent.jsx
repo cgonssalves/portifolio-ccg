@@ -1,5 +1,5 @@
 // src/components/Book/SpreadContent.jsx
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import {
   FaGithub, FaChevronLeft, FaChevronRight,
@@ -260,38 +260,44 @@ export const VelhaLeft      = ({ p, onSave }) => <ProjectPage project={p} side="
 export const VelhaRight     = ({ p, onSave }) => <ProjectPage project={p} side="right" onSave={onSave} />;
 export const PooLeft        = ({ p, onSave }) => <ProjectPage project={p} side="left"  onSave={onSave} />;
 export const PooRight       = ({ p, onSave }) => <ProjectPage project={p} side="right" onSave={onSave} />;
+export const MarathonLeft  = ({ p, onSave }) => <EventPage event={p} onSave={onSave} />;
+export const MarathonRight = ({ p, onSave }) => <EventPage event={p} onSave={onSave} />;
 
 /* ─────────────────────────────────────────────────────────────
    CARROSSEL DE EVENTOS
 ───────────────────────────────────────────────────────────── */
+const CAROUSEL_INTERVAL_MS = 3000;
+const isVideoMedia = src => /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(src);
+const getSynchronizedIndex = length => Math.floor(Date.now() / CAROUSEL_INTERVAL_MS) % length;
+
 function EventCarousel({ photos }) {
   const [idx, setIdx] = useState(0);
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIdx, setLbIdx] = useState(0);
-  const intervalRef = useRef(null);
-  const timeoutRef = useRef(null);
-
-  const startAutoPlay = useCallback(() => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setIdx(i => (i + 1) % photos.length);
-    }, 3000);
-  }, [photos.length]);
 
   useEffect(() => {
-    if (photos.length > 1) startAutoPlay();
-    return () => {
-      clearInterval(intervalRef.current);
-      clearTimeout(timeoutRef.current);
-    };
-  }, [photos.length, startAutoPlay]);
+    if (photos.length < 2) {
+      setIdx(0);
+      return undefined;
+    }
 
-  const handleNav = useCallback((newIdx) => {
-    setIdx(newIdx);
-    clearInterval(intervalRef.current);
-    clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(startAutoPlay, 8000);
-  }, [startAutoPlay]);
+    const syncIndex = () => setIdx(getSynchronizedIndex(photos.length));
+    syncIndex();
+
+    let intervalId;
+    const delayToNextTick = CAROUSEL_INTERVAL_MS - (Date.now() % CAROUSEL_INTERVAL_MS);
+    const timeoutId = setTimeout(() => {
+      syncIndex();
+      intervalId = setInterval(syncIndex, CAROUSEL_INTERVAL_MS);
+    }, delayToNextTick);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
+  }, [photos.length]);
+
+  const handleNav = useCallback(newIdx => setIdx(newIdx), []);
 
   return (
     <>
@@ -303,7 +309,6 @@ function EventCarousel({ photos }) {
           </div>
         ) : (
           <>
-            {/* Track */}
             <div style={{ position:'absolute', inset:0, overflow:'hidden', borderRadius:'inherit' }}>
               <div style={{
                 display: 'flex',
@@ -313,15 +318,20 @@ function EventCarousel({ photos }) {
               }}>
                 {photos.map((src, i) => (
                   <div key={i} style={{ flexShrink:0, width:'100%', height:'100%' }}>
-                    <img src={src} alt={`Foto ${i+1}`}
-                      style={{ width:'100%', height:'100%', objectFit:'cover', cursor:'zoom-in' }}
-                      onClick={() => { setLbIdx(i); setLbOpen(true); }} />
+                    {isVideoMedia(src) ? (
+                      <video src={src} controls playsInline preload="metadata"
+                        aria-label={`Vídeo ${i + 1}`}
+                        style={{ width:'100%', height:'100%', objectFit:'contain', background:'#111' }} />
+                    ) : (
+                      <img src={src} alt={`Foto ${i+1}`}
+                        style={{ width:'100%', height:'100%', objectFit:'cover', cursor:'zoom-in' }}
+                        onClick={() => { setLbIdx(i); setLbOpen(true); }} />
+                    )}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Controles */}
             {photos.length > 1 && (
               <>
                 <button className={`${styles.carouselCtrl} ${styles.cPrev}`}
@@ -356,7 +366,6 @@ function EventCarousel({ photos }) {
     </>
   );
 }
-
 /* ─────────────────────────────────────────────────────────────
    EVENT PAGE
    ──────────────────────────────────────────────────────────
@@ -367,17 +376,57 @@ function EventCarousel({ photos }) {
    • São componentes distintos, não o mesmo componente dos dois lados
 ───────────────────────────────────────────────────────────── */
 function EventPage({ event, onSave }) {
+  const [pitchOpen, setPitchOpen] = useState(false);
   return (
     <div className={styles.page}>
-      <h3 className={styles.secTitle}>
-        <span style={{ fontSize:'1rem', marginRight:4 }}>{event.icon}</span>
-        {event.title}
-      </h3>
+      <div className={styles.nasaHeader}>
+        <h3 className={styles.nasaTitle}>
+          <span style={{ fontSize:'1rem' }}>{event.icon}</span>
+          {event.title}
+        </h3>
+        <span className={styles.hackathonBadge}>{event.badge || 'HACKATHON'}</span>
+      </div>
 
       {/* Carrossel — imagem primeiro, igual às páginas de projeto */}
       <EventCarousel photos={event.photos || []} />
+      {(event.status || event.achievement) && (
+        <div className={styles.nasaAwards}>
+          {event.status && (
+            <div className={styles.nasaFinalistBadge}>
+              <span aria-hidden="true">🏆</span>
+              <span>{event.status}</span>
+            </div>
+          )}
+          {event.achievement && (
+            <div className={styles.nasaFinalistBadge}>
+              <span aria-hidden="true">🥉</span>
+              <span>{event.achievement}</span>
+            </div>
+          )}
+        </div>
+      )}
+      <p className={styles.eventDesc}>{event.description.split('**').map((part, index) => index % 2 ? <strong key={index}>{part}</strong> : part)}</p>
 
-      <p className={styles.eventDesc}>{event.description}</p>
+      {event.pitchUrl && (
+        <div className={styles.projActions}>
+          <button className={`${styles.pbtn} ${styles.pbtnAmber}`} onClick={() => setPitchOpen(true)}>
+            <FaYoutube /> ver pitch do site
+          </button>
+        </div>
+      )}
+
+      {pitchOpen && event.pitchUrl && createPortal(
+        <div className={styles.lightboxOverlay} onClick={() => setPitchOpen(false)}>
+          <div className={styles.pitchModal} onClick={e => e.stopPropagation()}>
+            <button className={styles.lightboxClose} onClick={() => setPitchOpen(false)}>✕</button>
+            <div className={styles.lightboxVideo}>
+              <iframe src={event.pitchUrl} title={`${event.title} pitch`} frameBorder="0" allowFullScreen
+                allow="autoplay; encrypted-media" />
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
 
       {/* Tags — mesmo estilo dos projetos */}
       {(event.tech || '').trim() && (
@@ -412,7 +461,7 @@ function NasaLeft({ p }) {
           <span style={{ fontSize:'1rem' }}>{p.icon}</span>
           {p.title}
         </h3>
-        <span className={styles.hackathonBadge}>HACKATHON</span>
+        <span className={styles.hackathonBadge}>{event.badge || 'HACKATHON'}</span>
       </div>
 
       <EventCarousel photos={p.photos || []} />
@@ -434,7 +483,7 @@ function NasaLeft({ p }) {
             <button className={styles.lightboxClose} onClick={() => setPitchOpen(false)}>✕</button>
             <div className={styles.lightboxVideo}>
               <iframe
-                src="https://www.youtube.com/embed/0og6enpz63o"
+                src="https://www.youtube.com/embed/DOqKQEeJSDA"
                 title="NASA Space Apps Pitch"
                 frameBorder="0"
                 allowFullScreen

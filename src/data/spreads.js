@@ -1,7 +1,7 @@
 // src/data/spreads.jsx
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
-export const TOTAL_SPREADS = 7; // spreads 0-6
+export const TOTAL_SPREADS = 6; // spreads 0-5
 
 /* ── SPREAD 0: Education (left) / blank right ── */
 export const spread0 = {

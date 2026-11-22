@@ -1,4 +1,4 @@
-﻿// src/components/Book/Book.jsx
+// src/components/Book/Book.jsx
 import { useState, useCallback, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import BookCover from './BookCover';
@@ -7,16 +7,27 @@ import {
   AgrosenseLeft, AgrosenseRight,
   JornadaLeft,   JornadaRight,
   EventsLeft,    EventsRight,
-  PixelLeft,     PixelRight,
-  VelhaLeft,     VelhaRight,
-  PooLeft,       PooRight,
   ContactLeft,   ContactRight,
+  MarathonLeft,  MarathonRight,
 } from './SpreadContent';
 import styles from './Book.module.css';
 import nasaEvent1 from '../../assets/events/nasa/nasa-event1.jpg';
 import nasaEvent2 from '../../assets/events/nasa/nasa-event2.jpg';
 import nasaEvent3 from '../../assets/events/nasa/nasa-event3.jpg';
 import nasaEvent4 from '../../assets/events/nasa/nasa-event4.jpg';
+import nasa2026Pic1 from '../../assets/events/nasa2026/nasa-pic-1.jpeg';
+import nasa2026Video1 from '../../assets/events/nasa2026/nasa-video-1.mp4';
+import nasa2026Pic2 from '../../assets/events/nasa2026/nasa-pic-2.jpg';
+import nasa2026Pic3 from '../../assets/events/nasa2026/nasa-pic-3.jpeg';
+import nasa2026Pitch from '../../assets/events/nasa2026/nasa-pitch-2026.mp4';
+import icpc2025Photo1 from '../../assets/events/icpc2025/icpc-2025-foto-1.jpeg';
+import icpc2025Photo2 from '../../assets/events/icpc2025/icpc-2025-foto-2.jpeg';
+import icpc2025Photo3 from '../../assets/events/icpc2025/icpc-2025-foto-3.jpeg';
+import icpc2025Photo4 from '../../assets/events/icpc2025/icpc-2025-foto-4.jpeg';
+import icpc2026Mara2 from '../../assets/events/icpc2026/icpc-2026-foto-1-mara2.jpeg';
+import icpc2026Mara1 from '../../assets/events/icpc2026/icpc-2026-foto-2-mara1-nova.jpeg';
+import icpc2026Mara3 from '../../assets/events/icpc2026/icpc-2026-foto-3-mara3-nova.jpeg';
+import icpc2026Mara4 from '../../assets/events/icpc2026/icpc-2026-foto-4-mara4.jpg';
 
 /* ═══════════════════════════════════════════════════════════
    [EDIT-BOOK] — DADOS EDITÁVEIS
@@ -37,25 +48,15 @@ const INIT = {
     description:'Eu e dois amigos fizemos esse site para a semana acadêmica do meu curso, fizemos para reunir os eventos que estariam sendo realizados, cursos que estariam disponíveis e palestras em um só lugar e para que aqueles que tivessem interesse em participar pudessem realizar a inscrição.\n\nNo caso como o site deveria armazenar nome, e-mail, e senha dos cadastrados utilizamos o Supabase como banco de dados e hospedamos no Vercel.\n\nA parte de pagamentos fizemos manual, disponibilizamos um QR code e uma chave pix, e o participante deveria anexar o comprovante no e-mail que mandaria para confirmar sua presença no evento. A validação do pagamento era realizada e atualizada no DB.\n\nAssim quando aconteceu a semana do evento imprimíamos uma lista baseado nas informações do DB de quem já havia pago e então a pessoa era autorizada a entrar.',
     github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/BcMwICYrfgk',
   },
-  pixel: {
-    id:'pixel', name:'UEMG Pixel', tagline:'Canvas colaborativo em tempo real',
-    tech:'React · WebSocket · Canvas API',
-    description:'Projeto colaborativo onde alunos da UEMG pintam pixels em um canvas compartilhado em tempo real. Inspirado no Reddit Place, promove integração e identidade universitária.',
-    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:null,
+  marathon: {
+    id:'icpc-2025', icon:'💻', title:'Maratona ICPC 2025', badge:'ICPC',
+    description:'Em 30/09/2025 e em 29/09/2026 eu e minha equipe participamos da Maratona de Programação (ICPC), promovida pela Sociedade Brasileira de Computação (SBC), onde teríamos que resolver problemas algorítmicos e de lógica dentro de um tempo limite, testando trabalho em equipe, estratégia e programação sob pressão. Mais detalhes e registros da participação ficam disponíveis aqui embaixo.',
+    tech:'', photos:[icpc2025Photo1, icpc2025Photo2, icpc2025Photo3, icpc2025Photo4],
   },
-  velha: {
-    id:'velha', name:'Jogo da Velha Mobile', tagline:'Multiplayer local em React Native',
-    tech:'React Native · Expo · AsyncStorage',
-    description:'Jogo da velha para Android com modo multiplayer local e contra IA. Animações fluidas com React Native Reanimated e histórico salvo localmente.',
-    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:null,
-  },
-  poo: {
-    id:'poo', name:'POO Visual', tagline:'Visualizador educacional de POO em Java',
-    tech:'Java · JavaFX · OOP',
-    description:'Ferramenta educacional que visualiza graficamente os conceitos de POO em Java — herança, polimorfismo, encapsulamento e interfaces — de forma interativa e didática.',
-    github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:null,
-  },
-  nasa: {
+  marathon2026: {
+    id:'icpc-2026', icon:'💻', title:'Maratona ICPC 2026', badge:'ICPC',
+    description:"Inspirados pela Maratona de Programação (ICPC), eu e minha equipe organizamos nossas próprias maratonas de programação na universidade, dentro dos cursos de Engenharia da Computação e Sistemas de Informação. Para deixar a experiência fiel à competição oficial, configuramos e utilizamos o próprio sistema de correção da maratona, o **BOCA**, além de contar com premiações para os destaques. Conseguimos realizar um evento incrível, promovendo prática algorítmica e trabalho em equipe entre os alunos.", tech:'', photos:[icpc2026Mara2, icpc2026Mara1, icpc2026Mara3, icpc2026Mara4],
+  },  nasa: {
     id:'nasa', icon:'🚀', title:'NASA Space Apps 2025',
     description:"Nos dias 04 e 05 de Outubro de 2025 eu e minha equipe de desenvolvedores participamos do HACKATHON da NASA o Space Apps onde nele poderíamos escolher um problema real enfrentado pela organização. Escolhemos o problema 'Will It Rain On My Parade?' onde deveríamos criar um aplicativo que responda se o clima vai estragar um evento planejado ao ar livre usando dados fornecidos de satélites da NASA e outras fontes. O vídeo do nosso pitch que estará anexado aqui em baixo via link.",
     tech:'', photos:[nasaEvent1, nasaEvent2, nasaEvent3, nasaEvent4],
@@ -63,7 +64,10 @@ const INIT = {
   maratona: {
     id:'nasa-2026', icon:'🚀', title:'NASA Space Apps 2026',
     description:"Nos dias 14 e 15 de Novembro de 2026 eu e minha equipe de desenvolvedores participamos do HACKATHON da NASA o Space Apps onde nele poderíamos escolher um problema real enfrentado pela organização. Escolhemos o problema 'Interplanetary Survival Guide: Martian Map' onde deveríamos criar uma ferramenta integrada de mapas e rotas em Marte para apoiar missões humanas de exploração na superfície, usando dados de missões da NASA — no nosso caso, desenvolvendo o Mars Route Planner (MRP) para planejamento de rotas e estimativas de oxigênio e tempo. O vídeo do nosso pitch estará anexado aqui embaixo via link.",
-    tech:'', photos:[],
+    pitchUrl:'https://www.youtube.com/embed/ajl30r-X8Qw',
+    status:'Finalistas brasileiros — fase internacional',
+    achievement:'3º Global Nominees',
+    tech:'', photos:[nasa2026Pic1, nasa2026Video1, nasa2026Pic2, nasa2026Pic3, nasa2026Pitch],
   },
 };
 /* ════ [EDIT-BOOK] fim ════ */
@@ -88,7 +92,7 @@ export default function Book() {
   const navigate = useCallback((delta) => {
     if (flipping) return;
     const next = spread + delta;
-    if (next < 0 || next > 7) return;
+    if (next < 0 || next > 5) return;
 
     setFlipDir(delta);
     setFlipping(true);
@@ -100,7 +104,7 @@ export default function Book() {
     }, 500);
   }, [spread, flipping]);
 
-  const goToContact = () => { if (!flipping) navigate(7 - spread); };
+  const goToContact = () => { if (!flipping) navigate(5 - spread); };
 
   /* ════ [EDIT-BOOK-SPREADS] ════ */
   const SPREADS = {
@@ -122,18 +126,10 @@ export default function Book() {
       rightEl: <AgrosenseRight p={data.agrosense} onSave={handleSave} />,
     },
     4: { lNum:'9', rNum:'10',
-      leftEl:  <PixelLeft  p={data.pixel} onSave={handleSave} />,
-      rightEl: <PixelRight p={data.pixel} onSave={handleSave} />,
+      leftEl:  <MarathonLeft  p={data.marathon}    onSave={handleSave} />,
+      rightEl: <MarathonRight p={data.marathon2026} onSave={handleSave} />,
     },
     5: { lNum:'11', rNum:'12',
-      leftEl:  <VelhaLeft  p={data.velha} onSave={handleSave} />,
-      rightEl: <VelhaRight p={data.velha} onSave={handleSave} />,
-    },
-    6: { lNum:'13', rNum:'14',
-      leftEl:  <PooLeft  p={data.poo} onSave={handleSave} />,
-      rightEl: <PooRight p={data.poo} onSave={handleSave} />,
-    },
-    7: { lNum:'15', rNum:'16',
       leftEl:  <ContactLeft />,
       rightEl: <ContactRight />,
     },
@@ -142,7 +138,7 @@ export default function Book() {
 
   const cur  = SPREADS[spread];
   const prev = spread > 0 ? SPREADS[spread - 1] : null;
-  const next = spread < 7 ? SPREADS[spread + 1] : null;
+  const next = spread < 5 ? SPREADS[spread + 1] : null;
 
   // Durante o flip para frente:
   //   A página direita ATUAL dobra para a esquerda (flipOut)
@@ -223,7 +219,7 @@ export default function Book() {
               {!flipping && <span className={styles.pageNum} style={{right:12}}>{cur.rNum}</span>}
             </div>
 
-            {spread < 7 && !flipping && (
+            {spread < 5 && !flipping && (
               <div className={styles.cornerFold} onClick={() => navigate(1)} title="Próxima página" />
             )}
           </div>
@@ -236,7 +232,7 @@ export default function Book() {
           </button>
           <button className={`${styles.navBtn} ${styles.navBtnNext}`}
             onClick={() => navigate(1)}
-            disabled={spread === 7 || flipping}>
+            disabled={spread === 5 || flipping}>
             <FaChevronRight />
           </button>
         </div>
