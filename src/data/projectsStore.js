@@ -1,4 +1,4 @@
-﻿// src/data/projectsStore.js
+// src/data/projectsStore.js
 // Fonte central de dados dos projetos.
 // Editado via EditPanel — o estado fica em App.jsx.
 
@@ -18,7 +18,7 @@ export const initialProjects = {
   },
   jornada: {
     id: 'jornada',
-    name: 'Computa Hub',
+    name: 'ComputaHub',
     tagline: 'Trilhas de aprendizado em tecnologia',
     tag: 'Site',
     tech: 'TypeScript · JavaScript · React · Supabase · Vercel',

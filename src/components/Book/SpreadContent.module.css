@@ -95,6 +95,13 @@
 }
 .chip:hover { border-color: var(--amber); background: #fce5b0; }
 
+.skillsDivider {
+  width: 100%;
+  height: 1px;
+  margin: 5px 0;
+  background: var(--line-color);
+  flex-shrink: 0;
+}
 /* Divider */
 .divider {
   height: 1px;

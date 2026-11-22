@@ -45,7 +45,13 @@ export function InfoPage() {
 
       <h3 className={styles.secTitle}><FaCode className={styles.secIcon} /> Competências</h3>
       <div className={styles.chipGrid}>
-        {['Git & GitHub','Lógica de Programação','Java','JavaScript','React','Node.js','Python'].map(s => (
+        {['Inteligência Artificial','Git & GitHub','Metodologias Ágeis','Banco de Dados','POO','Desenvolvimento Web e Mobile'].map(s => (
+          <span key={s} className={styles.chip}>{s}</span>
+        ))}
+      </div>
+      <div className={styles.skillsDivider} />
+      <div className={styles.chipGrid}>
+        {['Java','JavaScript','React','Node.js','Python'].map(s => (
           <span key={s} className={styles.chip}>{s}</span>
         ))}
       </div>
@@ -181,12 +187,13 @@ function ProjectPage({ project, side, onSave }) {
 export function AgrosenseLeft({ p }) {
   return (
     <div className={styles.page}>
-      <div className={styles.projHeader}>
-        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
-        <span className={styles.projLabel}>Projeto</span>
+      <div className={styles.nasaHeader}>
+        <h3 className={styles.nasaTitle}>
+          <span style={{ fontSize:'1rem' }}>🌱</span>
+          {p.name}
+        </h3>
+        <span className={styles.hackathonBadge}>SaaS</span>
       </div>
-      <div className={styles.projTitleBig}>{p.name}</div>
-      <div className={styles.projSubtitle}>{p.tagline}</div>
       <div className={`${styles.pageImg} ${styles.pageImgFill}`}>
         <iframe src={p.video} title={p.name} frameBorder="0" allowFullScreen />
       </div>
@@ -202,9 +209,12 @@ export function AgrosenseLeft({ p }) {
 export function AgrosenseRight({ p }) {
   return (
     <div className={styles.page}>
-      <div className={styles.projHeader}>
-        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
-        <span className={styles.projLabel}>Projeto</span>
+      <div className={styles.nasaHeader}>
+        <h3 className={styles.nasaTitle}>
+          <span style={{ fontSize:'1rem' }}>🌱</span>
+          {p.name}
+        </h3>
+        <span className={styles.hackathonBadge}>SaaS</span>
       </div>
       <p className={styles.projDesc} style={{ whiteSpace: 'pre-line' }}>{p.description}</p>
       <div className={styles.projActions}>
@@ -219,12 +229,13 @@ export function AgrosenseRight({ p }) {
 export function JornadaLeft({ p }) {
   return (
     <div className={styles.page}>
-      <div className={styles.projHeader}>
-        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
-        <span className={styles.projLabel}>Projeto</span>
+      <div className={styles.nasaHeader}>
+        <h3 className={styles.nasaTitle}>
+          <span style={{ fontSize:'1rem' }}>💻</span>
+          {p.name}
+        </h3>
+        <span className={styles.hackathonBadge}>SITE</span>
       </div>
-      <div className={styles.projTitleBig}>{p.name}</div>
-      <div className={styles.projSubtitle}>{p.tagline}</div>
       <div className={`${styles.pageImg} ${styles.pageImgFill}`}>
         <iframe src={p.video} title={p.name} frameBorder="0" allowFullScreen />
       </div>
@@ -240,9 +251,12 @@ export function JornadaLeft({ p }) {
 export function JornadaRight({ p }) {
   return (
     <div className={styles.page}>
-      <div className={styles.projHeader}>
-        <span className={styles.projTag}>{p.tag || (p.tech || '').split('·')[0].trim()}</span>
-        <span className={styles.projLabel}>Projeto</span>
+      <div className={styles.nasaHeader}>
+        <h3 className={styles.nasaTitle}>
+          <span style={{ fontSize:'1rem' }}>💻</span>
+          {p.name}
+        </h3>
+        <span className={styles.hackathonBadge}>SITE</span>
       </div>
       <p className={styles.projDesc} style={{ whiteSpace: 'pre-line' }}>{p.description}</p>
       <div className={styles.projActions}>
@@ -461,7 +475,7 @@ function NasaLeft({ p }) {
           <span style={{ fontSize:'1rem' }}>{p.icon}</span>
           {p.title}
         </h3>
-        <span className={styles.hackathonBadge}>{event.badge || 'HACKATHON'}</span>
+        <span className={styles.hackathonBadge}>{p.badge || 'HACKATHON'}</span>
       </div>
 
       <EventCarousel photos={p.photos || []} />
@@ -507,19 +521,30 @@ export const EventsRight = ({ p, onSave }) => <EventPage event={p} onSave={onSav
    CONTATO
 ───────────────────────────────────────── */
 export function ContactLeft() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const message = String(formData.get('message') || '').trim();
+    const subject = encodeURIComponent('Contato pelo portfólio');
+    const body = encodeURIComponent(`Nome: ${name}\nE-mail: ${email}\n\nMensagem:\n${message}`);
+
+    window.location.href = `mailto:gonssalvescaua@gmail.com?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className={styles.page}>
       <h3 className={styles.secTitle}><FaEnvelope className={styles.secIcon} /> Contato</h3>
-      <div className={styles.contactForm}>
-        <input className={styles.cfInput} type="text"  placeholder="Seu nome" />
-        <input className={styles.cfInput} type="email" placeholder="Seu e-mail" />
-        <textarea className={styles.cfInput} rows={4}  placeholder="Sua mensagem..." />
-        <button className={styles.cfSubmit}><FaEnvelope /> Enviar Mensagem</button>
-      </div>
+      <form className={styles.contactForm} onSubmit={handleSubmit}>
+        <input className={styles.cfInput} type="text" name="name" placeholder="Seu nome" autoComplete="name" required />
+        <input className={styles.cfInput} type="email" name="email" placeholder="Seu e-mail" autoComplete="email" required />
+        <textarea className={styles.cfInput} name="message" rows={4} placeholder="Sua mensagem..." required />
+        <button className={styles.cfSubmit} type="submit"><FaEnvelope /> Enviar Mensagem</button>
+      </form>
     </div>
   );
 }
-
 export function ContactRight() {
   return (
     <div className={styles.page} style={{ display:'flex', flexDirection:'column',

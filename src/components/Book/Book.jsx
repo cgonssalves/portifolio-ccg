@@ -42,7 +42,7 @@ const INIT = {
     github:'https://github.com/cgonssalves', imgLeft:null, imgRight:null, video:'https://www.youtube.com/embed/zQx7W-UIu9I',
   },
   jornada: {
-    id:'jornada', name:'Computa Hub', tagline:'Trilhas de aprendizado em tecnologia',
+    id:'jornada', name:'ComputaHub', tagline:'Trilhas de aprendizado em tecnologia',
     tag:'Site',
     tech:'TypeScript · JavaScript · React · Supabase · Vercel',
     description:'Eu e dois amigos fizemos esse site para a semana acadêmica do meu curso, fizemos para reunir os eventos que estariam sendo realizados, cursos que estariam disponíveis e palestras em um só lugar e para que aqueles que tivessem interesse em participar pudessem realizar a inscrição.\n\nNo caso como o site deveria armazenar nome, e-mail, e senha dos cadastrados utilizamos o Supabase como banco de dados e hospedamos no Vercel.\n\nA parte de pagamentos fizemos manual, disponibilizamos um QR code e uma chave pix, e o participante deveria anexar o comprovante no e-mail que mandaria para confirmar sua presença no evento. A validação do pagamento era realizada e atualizada no DB.\n\nAssim quando aconteceu a semana do evento imprimíamos uma lista baseado nas informações do DB de quem já havia pago e então a pessoa era autorizada a entrar.',
@@ -230,6 +230,9 @@ export default function Book() {
             disabled={spread === 0 || flipping}>
             <FaChevronLeft />
           </button>
+          {spread === 0 && !flipping && (
+            <span className={styles.pageHint}>Clique para mudar de página</span>
+          )}
           <button className={`${styles.navBtn} ${styles.navBtnNext}`}
             onClick={() => navigate(1)}
             disabled={spread === 5 || flipping}>
