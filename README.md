@@ -26,10 +26,8 @@ npm run dev
 | Spread | Páginas | Conteúdo |
 |--------|---------|----------|
 | 0 | 2–3 | Formação · Objetivo · Contatos |
-| 1 | 4–5 | Agrosense |
-| 2 | 6–7 | Jornada Tech |
-| 3 | 8–9 | Eventos (NASA · Maratona SBC) |
-| 4 | 10–11 | UEMG Pixel |
-| 5 | 12–13 | Jogo da Velha Mobile |
-| 6 | 14–15 | POO Visual |
-| 7 | 16–17 | Contato |
+| 1 | 4–5 | NASA Space Apps (Hackathon) |
+| 2 | 6–7 | ComputHub (site) |
+| 3 | 8–9 | AgroGestão (Saas) |
+| 4 | 10–11 | Maratonas de Programação (ICPC) |
+| 5 | 12–13 | Contato |
